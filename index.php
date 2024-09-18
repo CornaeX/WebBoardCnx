@@ -33,7 +33,7 @@ $isLoggedIn = isset($_SESSION['username']); // Corrected variable name
     <?php if ($isLoggedIn): ?>
       <div class="form">
         <form action="process_post.php" method="POST">
-          <textarea name="message" rows="4" placeholder="Your Message" required></textarea>
+          <textarea name="message" rows="4" placeholder="Your Message" required style="resize: none;"></textarea>
           <button type="submit">Post Message</button>
         </form>
       </div>
@@ -63,10 +63,10 @@ $isLoggedIn = isset($_SESSION['username']); // Corrected variable name
         echo '<p>No posts available.</p>';
       }
       ?>
+      <?php if ($isLoggedIn): ?>
+        <a href="logout.php">Logout</a>
+      <?php endif; ?>
     </div>
   </div>
-  <?php if ($isLoggedIn): ?>
-    <a href="logout.php">Logout</a>
-  <?php endif; ?>
 </body>
 </html>
