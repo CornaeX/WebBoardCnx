@@ -1,42 +1,123 @@
+/* General Styles */
 body {
-      font-family: Arial, sans-serif;
-    }
-    .container {
-      width: 70%;
-      margin: 0 auto;
-      padding: 20px;
-    }
-    .form {
-      margin-bottom: 30px;
-    }
-    .form input, .form textarea {
-      width: 100%;
-      margin-bottom: 10px;
-      padding: 10px;
-    }
-    .form button {
-      padding: 10px 20px;
-      background: #007BFF;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    .posts {
-      margin-top: 20px;
-    }
-    .post {
-      border-bottom: 1px solid #ddd;
-      padding: 10px 0;
-    }
-    .post h3 {
-      margin: 0 0 10px;
-    }
-    .post p {
-      margin: 0 0 5px;
-    }
-    .post small {
-      color: #666;
-    }
-    .post-actions {
-      margin-top: 10px;
-    }
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Header and Welcome */
+h1 {
+  color: #333;
+  font-size: 24px;
+}
+
+a {
+  color: #3498db;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Form Styling */
+.form {
+  margin-bottom: 20px;
+}
+
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #3498db;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+/* Post Styling */
+.posts {
+  margin-top: 20px;
+}
+
+.post {
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  background-color: #fafafa;
+}
+
+.post h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.post p {
+  margin: 10px 0;
+  font-size: 16px;
+  color: #666;
+}
+
+.post small {
+  color: #999;
+}
+
+.post-actions {
+  margin-top: 10px;
+}
+
+.post-actions a {
+  color: #e74c3c;
+}
+
+.post-actions a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .container {
+    padding: 10px;
+  }
+
+  textarea {
+    font-size: 14px;
+  }
+
+  button {
+    font-size: 14px;
+  }
+
+  .post h3 {
+    font-size: 16px;
+  }
+
+  .post p {
+    font-size: 14px;
+  }
+}

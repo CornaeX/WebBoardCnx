@@ -1,16 +1,13 @@
 <?php
-session_start(); // Ensure this is at the top of the file
+session_start();
+include 'firebase.php'; // Include your Firebase functions
 
-// Check if the user is logged in or set some default values
-$userName = isset($_SESSION['username']) ? $_SESSION['username'] : 'Guest'; // Default to 'Guest' if not logged in
-$isAdmin = isset($_SESSION['isAdmin']) ? $_SESSION['isAdmin'] : false;
-
-include 'firebase.php';
-
+// Fetch posts
 $posts = getPosts();
 
-$isLoggedIn = isset($_SESSION['username']); // Corrected variable name
-
+// Check if user is logged in
+$userName = isset($_SESSION['username']) ? $_SESSION['username'] : 'Guest';
+$isAdmin = isset($_SESSION['isAdmin']) ? $_SESSION['isAdmin'] : false;
 ?>
 
 <!DOCTYPE html>
@@ -20,17 +17,16 @@ $isLoggedIn = isset($_SESSION['username']); // Corrected variable name
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fast Webboard</title>
   <link rel="stylesheet" type="text/css" href="style.css">
-  <script src="script.js" defer></script>
 </head>
 <body>
   <div class="container">
-    <?php if (!$isLoggedIn): ?>
+    <?php if (!isset($_SESSION['username'])): ?>
       <a href="login.php">Login</a>
       <a href="register.php">Register</a>
     <?php endif; ?>
     <h1>Welcome, <?php echo htmlspecialchars($userName); ?>!</h1>
 
-    <?php if ($isLoggedIn): ?>
+    <?php if (isset($_SESSION['username'])): ?>
       <div class="form">
         <form action="process_post.php" method="POST">
           <textarea name="message" rows="4" placeholder="Your Message" required></textarea>
@@ -42,8 +38,7 @@ $isLoggedIn = isset($_SESSION['username']); // Corrected variable name
     <div class="posts">
       <?php
       if (!empty($posts)) {
-        foreach ($posts as $postId => $post) {
-          $postId = $post['id'];
+        foreach ($posts as $post) {
           echo '<div class="post">';
           echo '<h3>' . htmlspecialchars($post['name']) . '</h3>';
           echo '<p>' . htmlspecialchars($post['message']) . '</p>';
@@ -51,6 +46,7 @@ $isLoggedIn = isset($_SESSION['username']); // Corrected variable name
 
           // Display "Edit" and "Delete" buttons if the user is the owner or an admin
           if ($userName == $post['name'] || $isAdmin) {
+            $postId = $post['id']; // Get the post ID
             echo '<div class="post-actions">';
             echo '<a href="edit_post.php?post_id=' . urlencode($postId) . '">Edit</a> | ';
             echo '<a href="delete_post.php?post_id=' . urlencode($postId) . '" onclick="return confirm(\'Are you sure you want to delete this post?\')">Delete</a>';
@@ -65,7 +61,7 @@ $isLoggedIn = isset($_SESSION['username']); // Corrected variable name
       ?>
     </div>
   </div>
-  <?php if ($isLoggedIn): ?>
+  <?php if (isset($_SESSION['username'])): ?>
     <a href="logout.php">Logout</a>
   <?php endif; ?>
 </body>

@@ -27,18 +27,37 @@ function getPosts() {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     
     $response = curl_exec($ch);
+    if ($response === false) {
+        echo 'Curl error: ' . curl_error($ch);
+        curl_close($ch);
+        return [];
+    }
     curl_close($ch);
     
     $posts = json_decode($response, true);
     
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        echo 'JSON decode error: ' . json_last_error_msg();
+        return [];
+    }
+    
     if ($posts) {
+        // Convert associative array to indexed array with post IDs
+        $postsWithIds = [];
+        foreach ($posts as $postId => $post) {
+            $post['id'] = $postId;
+            $postsWithIds[] = $post;
+        }
+        
         // Sort posts by timestamp
-        usort($posts, function ($a, $b) {
+        usort($postsWithIds, function ($a, $b) {
             return $b['timestamp'] - $a['timestamp'];
         });
+        
+        return $postsWithIds;
     }
 
-    return $posts ? $posts : [];
+    return [];
 }
 
 function getPost($postId) {
@@ -48,9 +67,17 @@ function getPost($postId) {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $response = curl_exec($ch);
     curl_close($ch);
-    
-    return json_decode($response, true);
+
+    $post = json_decode($response, true);
+
+    // Debugging output
+    if ($post === null) {
+        echo "Error decoding JSON: " . json_last_error_msg();
+    }
+
+    return $post;
 }
+
 
 function editPost($postId, $message) {
     $url = FIREBASE_URL . 'posts/' . $postId . '.json?auth=' . FIREBASE_AUTH;
@@ -79,5 +106,49 @@ function deletePost($postId) {
     $response = curl_exec($ch);
     curl_close($ch);
     
+    return $response ? true : false;
+}
+
+function getUsers() {
+    $url = FIREBASE_URL . 'users.json?auth=' . FIREBASE_AUTH;
+    
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    
+    $response = curl_exec($ch);
+
+    // Error handling
+    if ($response === false) {
+        $error = curl_error($ch);
+        curl_close($ch);
+        die('Curl error: ' . $error);
+    }
+
+    curl_close($ch);
+
+    // Decode response and handle errors
+    $users = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        die('JSON decode error: ' . json_last_error_msg());
+    }
+
+    return $users ? $users : [];
+}
+
+function saveUser($data) {
+    $url = FIREBASE_URL . 'users.json?auth=' . FIREBASE_AUTH;
+
+    $jsonData = json_encode($data);
+    $ch = curl_init();
+
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    $response = curl_exec($ch);
+    curl_close($ch);
+
     return $response ? true : false;
 }
