@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $isLoggedIn = isset($_SESSION['username']);
     if (!$isLoggedIn) {
         header('Location: login.php');
-        exit(); // Ensure script execution stops after redirection
+        exit();
     }
     
     $name = $_SESSION['username'];

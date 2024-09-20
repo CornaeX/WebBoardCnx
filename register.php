@@ -5,26 +5,23 @@ require 'firebase.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $password = $_POST['password'];
-
-    // Check if the username already exists
-    $users = getUsers();  // Function to fetch users from Firebase
+    
+    $users = getUsers();
 
     foreach ($users as $user) {
         if ($user['username'] === $username) {
-            // Username already exists
             header("Location: register.php?error=Username already exists");
             exit();
         }
     }
-
-    // Create a new user entry
+    
     $data = [
         'username' => $username,
         'password' => $password,
         'isAdmin' => false
     ];
 
-    if (saveUser($data)) {  // Function to save a new user to Firebase
+    if (saveUser($data)) {
         $_SESSION['username'] = $username;
         header("Location: index.php");
         exit();
@@ -38,7 +35,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Register</title>
+    <title> REGISTER </title>
+    <link rel="stylesheet" type="text/css" href="auth_style.css">
 </head>
 <body>
     <form action="register.php" method="post">

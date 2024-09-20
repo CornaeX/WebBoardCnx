@@ -64,11 +64,11 @@ button:hover {
 }
 
 .post {
-  padding: 15px;
+  position: relative;
+  margin-bottom: 20px;
+  padding: 10px;
   border: 1px solid #ddd;
-  border-radius: 4px;
-  margin-bottom: 10px;
-  background-color: #fafafa;
+  border-radius: 5px;
 }
 
 .post h3 {
@@ -120,4 +120,72 @@ button:hover {
   .post p {
     font-size: 14px;
   }
+}
+
+.top-right-buttons {
+  display: flex;
+  justify-content: flex-end; /* Aligns buttons to the right */
+  margin-bottom: 20px; /* Adds spacing below the buttons */
+}
+
+/* Button Styles */
+a.button {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-left: 10px; /* Adds space between the buttons */
+  background-color: #2ecc71; /* Green color for default state */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+a.button:hover {
+  background-color: #27ae60; /* Darker green on hover */
+}
+
+/* Logout Button */
+a.logout-button {
+  background-color: #e74c3c; /* Red color for the logout button */
+}
+
+a.logout-button:hover {
+  background-color: #c0392b; /* Darker red on hover */
+}
+
+
+
+/* Align the reply section to the right side */
+.replies {
+  margin-top: 10px;
+}
+
+.reply {
+  background-color: #f9f9f9;
+  padding: 8px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  font-size: 0.9em; /* Smaller font size for replies */
+}
+
+.reply p {
+  margin: 0;
+}
+
+.reply small {
+  color: #888;
+}
+
+.no-replies {
+  font-size: 0.85em;
+  color: #aaa;
+}
+
+.hidden {
+    display: none;
 }

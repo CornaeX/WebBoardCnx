@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'firebase.php'; // Include your database connection
+include 'firebase.php';
 
 if (!isset($_SESSION['username'])) {
     header('Location: login.php');

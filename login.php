@@ -1,13 +1,12 @@
 <?php
-session_start(); // Ensure this is at the top of the file
+session_start();
 require 'firebase.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // Check if the user exists in Firebase
-    $users = getUsers();  // You need to implement this function to get users from Firebase
+    $users = getUsers();
 
     $_SESSION['isAdmim'] = false;
 
@@ -15,19 +14,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     foreach ($users as $user) {
         if ($user['username'] === $username && $user['password'] === $password) {
             $userFound = true;
-            $_SESSION['username'] = $username; // Store the username in the session
-            // $_SESSION['isAdmin'] = isset($user['isAdmin']) && $user['isAdmin'];
+            $_SESSION['username'] = $username;
             $_SESSION['isAdmin'] = $user['isAdmin'];
             break;
         }
     }
 
     if ($userFound) {
-        // Successful login
         header("Location: index.php");
         exit();
     } else {
-        // Login failed, redirect with an error
         header("Location: login.php?error=Invalid Username or Password");
         exit();
     }
@@ -38,6 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html>
 <head>
     <title> LOGIN </title>
+    <link rel="stylesheet" type="text/css" href="auth_style.css">
 </head>
 <body>
     <form action="login.php" method="post">

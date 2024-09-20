@@ -1,12 +1,7 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Smooth scrolling for internal links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-          behavior: 'smooth'
-        });
-      });
+document.querySelectorAll('.reply-toggle').forEach(button => {
+    button.addEventListener('click', () => {
+      const postId = button.getAttribute('data-post-id');
+      const replyForm = document.getElementById('reply-form-' + postId);
+      replyForm.classList.toggle('hidden');
     });
-  });
-  
+});
