@@ -1,6 +1,6 @@
 <?php
-define('FIREBASE_URL', 'https://entranceexam-a978d-default-rtdb.asia-southeast1.firebasedatabase.app/');
-define('FIREBASE_AUTH', 'lgBwRWzTM6zV7vBGr63Zdcp5OFxdvrEgdaL2XSMn');
+define('FIREBASE_URL', '...........');
+define('FIREBASE_AUTH', '..........');
 
 function savePost($data) {
     $url = FIREBASE_URL . 'posts.json?auth=' . FIREBASE_AUTH;
